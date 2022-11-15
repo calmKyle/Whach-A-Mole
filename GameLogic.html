@@ -43,54 +43,75 @@
             background: red;
             position: absolute;
             transform: translate(-50%, -50%);
-        }        
+        }   
+        
+        .circle{
+            display: none;
+            position: absolute;
+        }
         </style>
 </head>
 
 <!-- Page HTML -->
 <body onload="StartUpSettings()">
     <!-- TODO: add score, round count..etc -->
-    <div id = "centralCircle" class="circleCentral" onclick="StartRound()"></div>
+    <div id = "circle" class="circle" onclick="StartRound()"></div>
 
     <h1>
         <p id="text">Whack-A-Mole Game (Assignment 2)</p>
-        <p id="text"> Your react time = <span id = "TimeTaken"></span></p>
+        <p> Your react time = <span id = "TimeTaken"></span></p>
     </h1>
 
-    <h2 onclick = "clicked" ></h2>
+    <h2>
+        <div id = "circle"></div>
+    </h2>
 
 
 </body>
 
 <script type="text/javascript">
     
-    //var 
-    var top, left, width;
-    var start,end, TimeTaken;
-    haschanged = false;
+        //var 
+        var start,end, TimeTaken;
 
-    // Game Logic goes here
+        // Game Logic goes here
 
+        function generateShape(){
+            var top = Math.random() * 250;
+            var left = Math.random() * 250;
+            var width = (Math.random() * 200) + 100;
 
-    function StartRound()
-    {
-        // Start the first round and load the first game target
-        top = Math.random() * 250;
-        left = Math.random() * 250;
-        width = (Math.random() * 250) + 100;
+            circle = document.getElementById("circle");
+            circle.style.borderRadius = "100%";
+            circle.style.width = width + "px";
+            circle.style.height = width + "px";
+            circle.style.top = top + "px";
+            circle.style.left = left + "px";
+            circle.style.display = "block";
+            circle.style.backgroundColor = "red";
+            start = new Date().getTime();
 
-        centralCircle.style.borderRadius = "50%";
-        centralCircle.style.display = "block";
-        start = new Date().getTime();
-        haschanged = true;  
-    }
+            
+        }
 
-	function delay(){
-		setTimeout(StartRound, Math.random() * 1000);
-	}
-	delay();
+        function delay(){
+        setTimeout(generateShape, Math.random() * 1000);
+        }
+        delay();
 
-
+        function StartRound()
+        {
+            circleCentre = circle;
+            // Start the first round and load the first game target
+            circle.onclick = function(){
+                circle.style.display ="none";
+                circleCentre.style.display = "none";
+                end = new Date().getTime();
+                TimeTaken = end - start;
+                TimeTaken = document.getElementById("TimeTaken").innerHTML = TimeTaken + " ms";
+                delay();
+            }
+        }
 
 
 </script>
