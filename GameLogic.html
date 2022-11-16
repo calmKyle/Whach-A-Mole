@@ -11,7 +11,7 @@
             border-radius:100%;
             width: 30px;
             height: 30px;
-            background: green;
+            background-color: green;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -22,7 +22,7 @@
             border-radius:100%;
             width: 10px;
             height: 10px;
-            background: red;
+            background-color: red;
             position: absolute;
             transform: translate(-50%, -50%);
         }
@@ -31,7 +31,7 @@
             border-radius:100%;
             width: 30px;
             height: 30px;
-            background: red;
+            background-color: red;
             position: absolute;
             transform: translate(-50%, -50%);
         }
@@ -40,7 +40,7 @@
             border-radius:100%;
             width: 50px;
             height: 50px;
-            background: red;
+            background-color: red;
             position: absolute;
             transform: translate(-50%, -50%);
         }   
@@ -48,6 +48,7 @@
         .circle{
             display: none;
             position: absolute;
+            background-color:  red;
         }
         </style>
 </head>
@@ -55,16 +56,12 @@
 <!-- Page HTML -->
 <body onload="StartUpSettings()">
     <!-- TODO: add score, round count..etc -->
-    <div id = "circle" class="circle" onclick="StartRound()"></div>
+    <div id = "circleCentral" class="circleCentral" onclick="StartRound()"></div>
 
     <h1>
         <p id="text">Whack-A-Mole Game (Assignment 2)</p>
-        <p> Your react time = <span id = "TimeTaken"></span></p>
+        <p id="text">React time = <span id = "TimeTaken"></span></p>
     </h1>
-
-    <h2>
-        <div id = "circle"></div>
-    </h2>
 
 
 </body>
@@ -73,43 +70,56 @@
     
         //var 
         var start,end, TimeTaken;
+        var list = [10,30,50];
+        gamestart = false;
 
-        // Game Logic goes here
+        function random_item(items)
+        {
+            return items[Math.floor(Math.random()*items.length)];
+        }
+
 
         function generateShape(){
-            var top = Math.random() * 250;
-            var left = Math.random() * 250;
-            var width = (Math.random() * 200) + 100;
-
-            circle = document.getElementById("circle");
-            circle.style.borderRadius = "100%";
-            circle.style.width = width + "px";
-            circle.style.height = width + "px";
-            circle.style.top = top + "px";
-            circle.style.left = left + "px";
-            circle.style.display = "block";
-            circle.style.backgroundColor = "red";
+            var x = (Math.random() * 500);
+            var y = (Math.random() * 500);
+            var width = random_item(list);
+            circleCentral = document.getElementById("circleCentral");
+            circleCentral.style.borderRadius = "100%";
+            circleCentral.style.width = width + "px";
+            circleCentral.style.height = width + "px";
+            circleCentral.style.top = x + "px";
+            circleCentral.style.left = y + "px";
+            circleCentral.style.display = "block";
             start = new Date().getTime();
 
             
         }
 
         function delay(){
-        setTimeout(generateShape, Math.random() * 1000);
+            setTimeout(generateShape, Math.random() * 1000);
         }
-        delay();
+
+        // Start the first round and load the first game target
+
+        function disappearCentre(){
+            const circleCentral = document.getElementById("circleCentral");
+            //circleCentral.classList.remove("circleCentral");
+            circleCentral.classList.toggle("circleCentral", "circle50px");
+            gamestart = true;
+        }
 
         function StartRound()
         {
-            circleCentre = circle;
-            // Start the first round and load the first game target
-            circle.onclick = function(){
-                circle.style.display ="none";
-                circleCentre.style.display = "none";
-                end = new Date().getTime();
-                TimeTaken = end - start;
-                TimeTaken = document.getElementById("TimeTaken").innerHTML = TimeTaken + " ms";
-                delay();
+            //disappearCentre();
+            if (gamestart = true){
+                document.getElementById("circleCentral").onclick = function(){
+                    circleCentral.style.display ="none";
+                    circleCentral.style.backgroundColor  = "#FF0000";
+                    end = new Date().getTime();
+                    TimeTaken = end - start;
+                    TimeTaken = document.getElementById("TimeTaken").innerHTML = TimeTaken + " ms";
+                    delay();
+                }
             }
         }
 
