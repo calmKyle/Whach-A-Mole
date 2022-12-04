@@ -46,9 +46,14 @@
         }   
         
         .circle{
-            display: none;
+            border-radius:100%;
+            width: 30px;
+            height: 30px;
+            background-color: green;
             position: absolute;
-            background-color:  red;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         </style>
 </head>
@@ -61,7 +66,12 @@
     <h1>
         <p id="text">Whack-A-Mole Game (Assignment 2)</p>
         <p id="text">React time = <span id = "TimeTaken"></span></p>
+        <p id="text">Round = <span id = "RoundCount"></span></p>
     </h1>
+
+    <h2> 
+        <p id="text">Final = <span id = "array"></span></p>
+    </h2>
 
 
 </body>
@@ -91,8 +101,6 @@
             circleCentral.style.left = y + "px";
             circleCentral.style.display = "block";
             start = new Date().getTime();
-
-            
         }
 
         function delay(){
@@ -104,9 +112,21 @@
         function disappearCentre(){
             const circleCentral = document.getElementById("circleCentral");
             //circleCentral.classList.remove("circleCentral");
-            circleCentral.classList.toggle("circleCentral", "circle50px");
+            //circleCentral.classList.toggle("circleCentral", "circle50px");
             gamestart = true;
         }
+
+        function showing(){
+            var xoffset = window.innerHeight / 2;
+            var yoffset = window.innerWidth / 2;
+            var widthoffset = 50;
+            circleCentral.style.backgroundColor = "#00FF00";
+            circleCentral.style.circle;
+            document.getElementById("array").innerHTML = timearray;
+            RoundCount = 0;
+        }
+        const timearray = [];
+        var RoundCount = 0;
 
         function StartRound()
         {
@@ -114,12 +134,19 @@
             if (gamestart = true){
                 document.getElementById("circleCentral").onclick = function(){
                     circleCentral.style.display ="none";
-                    circleCentral.style.backgroundColor  = "#FF0000";
-                    end = new Date().getTime();
-                    TimeTaken = end - start;
-                    TimeTaken = document.getElementById("TimeTaken").innerHTML = TimeTaken + " ms";
-                    delay();
+                        circleCentral.style.backgroundColor  = "#FF0000";
+                        end = new Date().getTime();
+                        TimeTaken = end - start;
+                        TimeTaken = document.getElementById("TimeTaken").innerHTML = TimeTaken + " ms";
+                        RoundCount++;
+                        RoundCount = document.getElementById("RoundCount").innerHTML = RoundCount;
+                        timearray.push(RoundCount,TimeTaken);
+                        if (RoundCount == 6){
+                            showing();
+                        }
+                        delay();
                 }
+
             }
         }
 
